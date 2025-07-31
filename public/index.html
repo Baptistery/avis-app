@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Laisser un avis</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <div class="overlay"></div>
 
   <div class="container">
-    <img src="/logo.png" alt="Logo" class="logo">
+    <img src="/logo.png" alt="Logo" class="logo" />
     <h2>Comment avez-vous trouvé votre expérience ?</h2>
 
     <div class="stars">
@@ -21,14 +21,14 @@
       <button class="star" data-note="5">&#9733;</button>
     </div>
 
-    <div id="form-container" style="display: none;">
+    <div id="form-container">
       <p>Merci de nous dire ce que nous pouvons améliorer :</p>
       <textarea id="message" placeholder="Votre message"></textarea>
-      <br>
+      <br />
       <button onclick="envoyerAvis()">Envoyer</button>
     </div>
 
-    <div id="confirmation" style="display: none;">
+    <div id="confirmation">
       <p>Merci pour votre retour ! Pourriez-vous aussi laisser un avis public ?</p>
       <a href="https://g.page/r/CODE_GOOGLE_REVIEW_PLACE" target="_blank">
         <button>Laisser un avis sur Google</button>

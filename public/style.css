@@ -1,114 +1,112 @@
-/* Image de fond sans flou */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  position: relative;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+/* style.css */
 
+/* Image fond (overlay) */
 .overlay {
   position: fixed;
-  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: url('/background.jpg') no-repeat center center/cover;
-  width: 100%;
-  height: 100%;
-  filter: brightness(0.7); /* légèrement assombri */
+  filter: brightness(0.6); /* baisse la luminosité */
+  z-index: -1;
 }
 
-/* Conteneur principal centré */
+/* Container centré */
 .container {
-  position: relative;
-  z-index: 1;
+  max-width: 400px;
+  margin: 5vh auto;
   padding: 20px;
+  background: rgba(255 255 255 / 0.9);
+  border-radius: 10px;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.95);
-  margin: 0 auto;
-  border-radius: 12px;
-  max-width: 500px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  width: 90vw;
-  top: 50%;
-  transform: translateY(50%);
+  position: relative; /* pour position absolute des messages */
 }
 
 /* Logo */
 .logo {
   max-width: 150px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-/* Étoiles côte à côte */
+/* Étoiles */
 .stars {
-  margin: 20px 0;
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .star {
-  font-size: 32px;
+  font-size: 2.5rem;
+  color: black;
   background: none;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s;
-  color: black;
+  transition: color 0.3s;
 }
 
+.star.selected,
 .star:hover {
-  transform: scale(1.2);
+  color: orange;
+  text-shadow: 0 0 5px orange;
 }
 
-.star.selected {
-  color: gold;
+/* Conteneurs feedback et confirmation */
+/* Réservent la place et font une transition en opacité */
+#form-container,
+#confirmation {
+  min-height: 160px; /* espace réservé */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  position: absolute;
+  top: 140px; /* juste sous les étoiles et titre */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
 
-/* Zone de texte */
+#form-container.show,
+#confirmation.show {
+  opacity: 1;
+  pointer-events: auto;
+  position: static;
+}
+
+/* Textarea */
 textarea {
   width: 100%;
-  height: 100px;
-  margin: 10px 0;
+  min-height: 80px;
   padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  resize: none;
+  font-size: 1rem;
+  resize: vertical;
 }
 
 /* Boutons */
 button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  background-color: #007BFF;
-  color: white;
   cursor: pointer;
-  font-weight: bold;
-  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #f57c00;
+  color: white;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #e65100;
 }
 
-/* ✅ Responsive mobile */
-@media (max-width: 600px) {
+/* Responsive */
+@media (max-width: 480px) {
   .container {
-    margin: 0 auto;
+    margin: 3vh 10px;
     padding: 15px;
-    width: 90vw;
-    top: 50%;
-    transform: translateY(50%);
   }
 
   .star {
-    font-size: 28px;
-  }
-
-  .logo {
-    max-width: 120px;
-  }
-
-  button {
-    width: 100%;
+    font-size: 2rem;
   }
 }

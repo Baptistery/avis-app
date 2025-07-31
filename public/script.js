@@ -10,20 +10,24 @@ stars.forEach(star => {
 
     // reset all
     stars.forEach(s => s.classList.remove('selected'));
-    star.classList.add('selected');
+    for (let i = 0; i < selectedNote; i++) {
+      stars[i].classList.add('selected');
+    }
+
+    // cacher les deux containers
+    formContainer.classList.remove('show');
+    confirmation.classList.remove('show');
 
     if (selectedNote >= 4) {
-      formContainer.style.display = 'none';
-      confirmation.style.display = 'block';
+      confirmation.classList.add('show');
     } else {
-      formContainer.style.display = 'block';
-      confirmation.style.display = 'none';
+      formContainer.classList.add('show');
     }
   });
 });
 
 function envoyerAvis() {
-  const message = document.getElementById('message').value;
+  const message = document.getElementById('message').value.trim();
   if (!selectedNote || !message) {
     alert("Veuillez sélectionner une note et écrire un message.");
     return;
@@ -31,18 +35,16 @@ function envoyerAvis() {
 
   fetch('/avis', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ note: selectedNote, message })
   })
-    .then(res => res.text())
-    .then(data => {
-      alert("Merci pour votre retour !");
-      formContainer.style.display = 'none';
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Une erreur est survenue.");
-    });
+  .then(res => res.text())
+  .then(data => {
+    alert("Merci pour votre retour !");
+    formContainer.classList.remove('show');
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Une erreur est survenue.");
+  });
 }
