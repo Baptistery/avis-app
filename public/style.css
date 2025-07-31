@@ -112,17 +112,20 @@ button:hover {
     width: 100%;
   }
 }
-/* Zone de feedback et message Google : animés mais ne déplacent pas la page */
-#feedbackForm,
-#googleMessage {
-  transition: opacity 0.3s ease;
-  min-height: 160px; /* réserve l'espace pour éviter que la page bouge */
+#form-container,
+#confirmation {
   opacity: 0;
+  transition: opacity 0.3s ease;
   pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
 
-#feedbackForm.show,
-#googleMessage.show {
+#form-container.show,
+#confirmation.show {
   opacity: 1;
   pointer-events: auto;
+  position: static;
 }
