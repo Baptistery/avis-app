@@ -1,140 +1,114 @@
-/* Styles globaux */
-
-body, html {
+/* Image de fond sans flou */
+body {
   margin: 0;
-  padding: 0;
-  height: 100%;
   font-family: Arial, sans-serif;
-  background: url('/background.jpg') no-repeat center center fixed;
-  background-size: cover;
-  filter: brightness(0.7); /* baisse un peu la luminosité */
+  position: relative;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.4); /* légère superposition sombre */
-  z-index: 0;
+  z-index: -1;
+  background: url('/background.jpg') no-repeat center center/cover;
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.7); /* légèrement assombri */
 }
 
+/* Conteneur principal centré */
 .container {
   position: relative;
   z-index: 1;
-  max-width: 400px;
-  margin: 50px auto;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 20px 30px 30px 30px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  padding: 20px;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  margin: 0 auto;
+  border-radius: 12px;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  width: 90vw;
+  top: 50%;
+  transform: translateY(50%);
 }
 
+/* Logo */
 .logo {
-  max-width: 120px;
-  margin: 0 auto 15px auto;
-  display: block;
-}
-
-h2 {
+  max-width: 150px;
   margin-bottom: 20px;
-  color: #333;
 }
 
-/* Étoiles */
-
+/* Étoiles côte à côte */
 .stars {
+  margin: 20px 0;
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 25px;
 }
 
 .star {
-  font-size: 36px;
+  font-size: 32px;
   background: none;
   border: none;
-  color: black; /* étoiles noires */
   cursor: pointer;
-  transition: color 0.3s;
-  padding: 0;
+  transition: transform 0.2s;
+  color: black;
 }
 
-.star.selected,
 .star:hover {
+  transform: scale(1.2);
+}
+
+.star.selected {
   color: gold;
 }
 
-/* Formulaire */
-
-#form-container {
-  margin-top: 15px;
-}
-
+/* Zone de texte */
 textarea {
   width: 100%;
-  height: 80px;
-  resize: none;
-  padding: 8px;
-  font-size: 16px;
-  border-radius: 4px;
+  height: 100px;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  box-sizing: border-box;
-  text-align: left;
+  resize: none;
 }
 
+/* Boutons */
 button {
-  margin-top: 10px;
   padding: 10px 20px;
-  background-color: #0b72e8;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  background-color: #007BFF;
   color: white;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 button:hover {
-  background-color: #095abb;
+  background-color: #0056b3;
 }
 
-/* Confirmation */
-
-#confirmation p {
-  margin-bottom: 15px;
-  font-size: 16px;
-  color: #333;
-}
-
-/* Responsive pour mobiles */
-
-@media (max-width: 480px) {
-  /* Container centré verticalement et horizontalement */
+/* ✅ Responsive mobile */
+@media (max-width: 600px) {
   .container {
     margin: 0 auto;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* centre verticalement */
-    padding: 15px 10px;
-    max-width: 95%;
+    padding: 15px;
+    width: 90vw;
+    top: 50%;
+    transform: translateY(50%);
   }
 
-  /* Les étoiles sur une seule ligne, scroll horizontal si besoin */
-  .stars {
-    flex-wrap: nowrap;  /* empêcher retour à la ligne */
-    overflow-x: auto;   /* scroll horizontal si trop petit */
-    justify-content: center;
+  .star {
+    font-size: 28px;
   }
 
-  /* Boîte de message centrée */
-  textarea {
-    display: block;
-    margin: 0 auto;
-    text-align: left; /* texte aligné à gauche pour écrire plus naturellement */
+  .logo {
+    max-width: 120px;
+  }
+
+  button {
+    width: 100%;
   }
 }
