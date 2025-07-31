@@ -1,52 +1,41 @@
-let selectedNote = 0;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laisser un avis</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="overlay"></div>
 
-const stars = document.querySelectorAll('.star');
-const formContainer = document.getElementById('form-container');
-const confirmation = document.getElementById('confirmation');
+  <div class="container">
+    <img src="/logo.png" alt="Logo" class="logo">
+    <h2>Comment avez-vous trouvé votre expérience ?</h2>
 
-stars.forEach(star => {
-  star.addEventListener('click', () => {
-    selectedNote = parseInt(star.dataset.note);
+    <div class="stars">
+      <button class="star" data-note="1">&#9733;</button>
+      <button class="star" data-note="2">&#9733;</button>
+      <button class="star" data-note="3">&#9733;</button>
+      <button class="star" data-note="4">&#9733;</button>
+      <button class="star" data-note="5">&#9733;</button>
+    </div>
 
-    // Réinitialise les étoiles
-    stars.forEach(s => s.classList.remove('selected'));
-    star.classList.add('selected');
+    <div id="form-container" style="display: none;">
+      <p>Merci de nous dire ce que nous pouvons améliorer :</p>
+      <textarea id="message" placeholder="Votre message"></textarea>
+      <br>
+      <button onclick="envoyerAvis()">Envoyer</button>
+    </div>
 
-    // Masquer les deux sections
-    formContainer.classList.remove('show');
-    confirmation.classList.remove('show');
+    <div id="confirmation" style="display: none;">
+      <p>Merci pour votre retour ! Pourriez-vous aussi laisser un avis public ?</p>
+      <a href="https://g.page/r/CODE_GOOGLE_REVIEW_PLACE" target="_blank">
+        <button>Laisser un avis sur Google</button>
+      </a>
+    </div>
+  </div>
 
-    if (selectedNote >= 4) {
-      // Afficher le message Google
-      confirmation.classList.add('show');
-    } else {
-      // Afficher le formulaire de feedback
-      formContainer.classList.add('show');
-    }
-  });
-});
-
-function envoyerAvis() {
-  const message = document.getElementById('message').value;
-  if (!selectedNote || !message) {
-    alert("Veuillez sélectionner une note et écrire un message.");
-    return;
-  }
-
-  fetch('/avis', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ note: selectedNote, message })
-  })
-    .then(res => res.text())
-    .then(data => {
-      alert("Merci pour votre retour !");
-      formContainer.classList.remove('show');
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Une erreur est survenue.");
-    });
-}
+  <script src="/script.js"></script>
+</body>
+</html>

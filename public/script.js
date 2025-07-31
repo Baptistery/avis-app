@@ -1,40 +1,52 @@
-console.log("JS chargé !");
-
 let selectedNote = 0;
 
-document.querySelectorAll('.star').forEach(btn => {
-  btn.addEventListener('click', () => {
-    selectedNote = parseInt(btn.dataset.note);
+const stars = document.querySelectorAll('.star');
+const formContainer = document.getElementById('form-container');
+const confirmation = document.getElementById('confirmation');
 
-    if (selectedNote <= 3) {
-      document.getElementById('form-container').style.display = 'block';
-      document.getElementById('confirmation').style.display = 'none';
+stars.forEach(star => {
+  star.addEventListener('click', () => {
+    selectedNote = parseInt(star.dataset.note);
+
+    // Réinitialise les étoiles
+    stars.forEach(s => s.classList.remove('selected'));
+    star.classList.add('selected');
+
+    // Masquer les deux sections
+    formContainer.classList.remove('show');
+    confirmation.classList.remove('show');
+
+    if (selectedNote >= 4) {
+      // Afficher le message Google
+      confirmation.classList.add('show');
     } else {
-      document.getElementById('form-container').style.display = 'none';
-      document.getElementById('confirmation').style.display = 'block';
-    }
-
-    // Effet visuel de sélection
-    document.querySelectorAll('.star').forEach(star => star.classList.remove('selected'));
-    for (let i = 0; i < selectedNote; i++) {
-      document.querySelectorAll('.star')[i].classList.add('selected');
+      // Afficher le formulaire de feedback
+      formContainer.classList.add('show');
     }
   });
 });
 
 function envoyerAvis() {
-  const message = document.getElementById('message').value.trim();
-  if (!message) return alert("Merci de laisser un message.");
+  const message = document.getElementById('message').value;
+  if (!selectedNote || !message) {
+    alert("Veuillez sélectionner une note et écrire un message.");
+    return;
+  }
 
   fetch('/avis', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({ note: selectedNote, message })
   })
     .then(res => res.text())
-    .then(() => {
-      alert("Avis envoyé !");
-      document.getElementById('form-container').innerHTML = "<p>Merci pour votre avis 🙏</p>";
+    .then(data => {
+      alert("Merci pour votre retour !");
+      formContainer.classList.remove('show');
     })
-    .catch(() => alert("Erreur lors de l'envoi."));
+    .catch(err => {
+      console.error(err);
+      alert("Une erreur est survenue.");
+    });
 }
