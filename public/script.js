@@ -8,20 +8,16 @@ stars.forEach(star => {
   star.addEventListener('click', () => {
     selectedNote = parseInt(star.dataset.note);
 
-    // Réinitialise les étoiles
+    // reset all
     stars.forEach(s => s.classList.remove('selected'));
     star.classList.add('selected');
 
-    // Masquer les deux sections
-    formContainer.classList.remove('show');
-    confirmation.classList.remove('show');
-
     if (selectedNote >= 4) {
-      // Afficher le message Google
-      confirmation.classList.add('show');
+      formContainer.style.display = 'none';
+      confirmation.style.display = 'block';
     } else {
-      // Afficher le formulaire de feedback
-      formContainer.classList.add('show');
+      formContainer.style.display = 'block';
+      confirmation.style.display = 'none';
     }
   });
 });
@@ -43,7 +39,7 @@ function envoyerAvis() {
     .then(res => res.text())
     .then(data => {
       alert("Merci pour votre retour !");
-      formContainer.classList.remove('show');
+      formContainer.style.display = 'none';
     })
     .catch(err => {
       console.error(err);
