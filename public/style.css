@@ -112,3 +112,17 @@ button:hover {
     width: 100%;
   }
 }
+/* Zone de feedback et message Google : animés mais ne déplacent pas la page */
+#feedbackForm,
+#googleMessage {
+  transition: opacity 0.3s ease;
+  min-height: 160px; /* réserve l'espace pour éviter que la page bouge */
+  opacity: 0;
+  pointer-events: none;
+}
+
+#feedbackForm.show,
+#googleMessage.show {
+  opacity: 1;
+  pointer-events: auto;
+}
