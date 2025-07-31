@@ -2,25 +2,40 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Avis Client</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laisser un avis</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <h1>Comment évaluez-vous votre expérience ?</h1>
-  <div class="rating">
-    <button onclick="submitRating(1)">1</button>
-    <button onclick="submitRating(2)">2</button>
-    <button onclick="submitRating(3)">3</button>
-    <button onclick="submitRating(4)">4</button>
-    <button onclick="submitRating(5)">5</button>
+  <div class="overlay"></div>
+
+  <div class="container">
+    <img src="/logo.png" alt="Logo" class="logo">
+    <h2>Comment avez-vous trouvé votre expérience ?</h2>
+
+    <div class="stars">
+      <button class="star" data-note="1">&#9733;</button>
+      <button class="star" data-note="2">&#9733;</button>
+      <button class="star" data-note="3">&#9733;</button>
+      <button class="star" data-note="4">&#9733;</button>
+      <button class="star" data-note="5">&#9733;</button>
+    </div>
+
+    <div id="form-container" style="display: none;">
+      <p>Merci de nous dire ce que nous pouvons améliorer :</p>
+      <textarea id="message" placeholder="Votre message"></textarea>
+      <br>
+      <button onclick="envoyerAvis()">Envoyer</button>
+    </div>
+
+    <div id="confirmation" style="display: none;">
+      <p>Merci pour votre retour ! Pourriez-vous aussi laisser un avis public ?</p>
+      <a href="https://g.page/r/CODE_GOOGLE_REVIEW_PLACE" target="_blank">
+        <button>Laisser un avis sur Google</button>
+      </a>
+    </div>
   </div>
 
-  <div id="feedbackForm" style="display:none;">
-    <h2>Désolé pour votre expérience 😟</h2>
-    <textarea id="feedbackText" placeholder="Expliquez-nous ce qui s'est passé..."></textarea>
-    <button onclick="sendFeedback()">Envoyer</button>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Laissez votre avis</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="container">
+    <img src="/logo.png" alt="Logo" class="logo">
+    <h1>Que pensez-vous de votre expérience ?</h1>
+    <div class="stars">
+      <button class="star" data-note="1">⭐</button>
+      <button class="star" data-note="2">⭐</button>
+      <button class="star" data-note="3">⭐</button>
+      <button class="star" data-note="4">⭐</button>
+      <button class="star" data-note="5">⭐</button>
+    </div>
+    <div id="form-container" style="display:none;">
+      <h3>Merci de nous aider à nous améliorer</h3>
+      <textarea id="message" placeholder="Expliquez-nous ce qui n’allait pas..."></textarea>
+      <button onclick="envoyerAvis()">Envoyer</button>
+    </div>
+    <div id="confirmation" style="display:none;">
+      <p>Merci pour votre retour ! Souhaitez-vous laisser un avis sur Google ?</p>
+      <a id="googleLink" href="https://g.page/r/CODE-GOOGLE-ICI/review" target="_blank">
+        <button>Laisser un avis Google</button>
+      </a>
+    </div>
+  </div>
+  <script src="/script.js"></script>
+</body>
+</html>
