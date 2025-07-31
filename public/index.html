@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Avis Client</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Comment évaluez-vous votre expérience ?</h1>
+  <div class="rating">
+    <button onclick="submitRating(1)">1</button>
+    <button onclick="submitRating(2)">2</button>
+    <button onclick="submitRating(3)">3</button>
+    <button onclick="submitRating(4)">4</button>
+    <button onclick="submitRating(5)">5</button>
+  </div>
+
+  <div id="feedbackForm" style="display:none;">
+    <h2>Désolé pour votre expérience 😟</h2>
+    <textarea id="feedbackText" placeholder="Expliquez-nous ce qui s'est passé..."></textarea>
+    <button onclick="sendFeedback()">Envoyer</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
