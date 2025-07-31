@@ -1,127 +1,114 @@
-/* style.css */
-
-/* Image fond (overlay) */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: url('/background.jpg') no-repeat center center/cover;
-  z-index: -1;
+/* Image de fond sans flou */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Container centré */
+.overlay {
+  position: fixed;
+  z-index: -1;
+  background: url('/background.jpg') no-repeat center center/cover;
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.7); /* légèrement assombri */
+}
+
+/* Conteneur principal centré */
 .container {
-  max-width: 400px;
-  margin: 5vh auto;
+  position: relative;
+  z-index: 1;
   padding: 20px;
-  background: rgba(255 255 255 / 0.9);
-  border-radius: 10px;
   text-align: center;
-  position: relative; /* pour position absolute des messages */
+  background-color: rgba(255, 255, 255, 0.95);
+  margin: 0 auto;
+  border-radius: 12px;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  width: 90vw;
+  top: 50%;
+  transform: translateY(50%);
 }
 
 /* Logo */
 .logo {
   max-width: 150px;
-  margin-bottom: 15px;
-}
-.stars {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
   margin-bottom: 20px;
 }
 
+/* Étoiles côte à côte */
+.stars {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 .star {
-  font-size: 2.5rem;
-  color: black;
+  font-size: 32px;
   background: none;
   border: none;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: transform 0.2s;
+  color: black;
 }
 
-.star.selected,
-.star:hover,
-.star:hover ~ .star {
-  color: orange;
-  text-shadow: 0 0 5px orange;
+.star:hover {
+  transform: scale(1.2);
 }
 
-/* Conteneurs feedback et confirmation */
-/* Réservent la place et font une transition en opacité */
-#form-container,
-#confirmation {
-  min-height: 160px; /* espace réservé */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-  position: absolute;
-  top: 140px; /* juste sous les étoiles et titre */
-  left: 0;
-  right: 0;
-  margin: 0 auto;
+.star.selected {
+  color: gold;
 }
 
-#form-container.show,
-#confirmation.show {
-  opacity: 1;
-  pointer-events: auto;
-  position: static;
-}
-
-/* Textarea */
+/* Zone de texte */
 textarea {
   width: 100%;
-  min-height: 80px;
+  height: 100px;
+  margin: 10px 0;
   padding: 10px;
-  font-size: 1rem;
-  resize: vertical;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
 }
 
 /* Boutons */
 button {
-  cursor: pointer;
   padding: 10px 20px;
-  font-size: 1rem;
   border: none;
-  border-radius: 5px;
-  background-color: #f57c00;
+  border-radius: 6px;
+  background-color: #007BFF;
   color: white;
-  transition: background-color 0.3s;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 button:hover {
-  background-color: #e65100;
+  background-color: #0056b3;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
+/* ✅ Responsive mobile */
+@media (max-width: 600px) {
   .container {
-    margin: 3vh 10px;
+    margin: 0 auto;
     padding: 15px;
+    width: 90vw;
+    top: 50%;
+    transform: translateY(50%);
   }
 
   .star {
-    font-size: 2rem;
+    font-size: 28px;
   }
-}
-#form-container,
-#confirmation {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-}
 
-#form-container.show,
-#confirmation.show {
-  opacity: 1;
-  pointer-events: auto;
-  position: static;
+  .logo {
+    max-width: 120px;
+  }
+
+  button {
+    width: 100%;
+  }
 }

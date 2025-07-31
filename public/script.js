@@ -2,29 +2,23 @@ console.log("JS chargé !");
 
 let selectedNote = 0;
 
-const stars = document.querySelectorAll('.star');
-const formContainer = document.getElementById('form-container');
-const confirmation = document.getElementById('confirmation');
-
-stars.forEach((btn, index) => {
-  btn.dataset.note = index + 1; // assure que data-note est bien défini
-
+document.querySelectorAll('.star').forEach(btn => {
   btn.addEventListener('click', () => {
-    selectedNote = index + 1;
+    selectedNote = parseInt(btn.dataset.note);
 
-    // Affichage conditionnel des containers
     if (selectedNote <= 3) {
-      formContainer.classList.add('show');
-      confirmation.classList.remove('show');
+      document.getElementById('form-container').style.display = 'block';
+      document.getElementById('confirmation').style.display = 'none';
     } else {
-      formContainer.classList.remove('show');
-      confirmation.classList.add('show');
+      document.getElementById('form-container').style.display = 'none';
+      document.getElementById('confirmation').style.display = 'block';
     }
 
-    // Mise à jour des étoiles sélectionnées
-    stars.forEach((star, i) => {
-      star.classList.toggle('selected', i < selectedNote);
-    });
+    // Effet visuel de sélection
+    document.querySelectorAll('.star').forEach(star => star.classList.remove('selected'));
+    for (let i = 0; i < selectedNote; i++) {
+      document.querySelectorAll('.star')[i].classList.add('selected');
+    }
   });
 });
 
@@ -37,10 +31,10 @@ function envoyerAvis() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ note: selectedNote, message })
   })
-  .then(res => res.text())
-  .then(() => {
-    alert("Avis envoyé !");
-    formContainer.innerHTML = "<p>Merci pour votre avis 🙏</p>";
-  })
-  .catch(() => alert("Erreur lors de l'envoi."));
+    .then(res => res.text())
+    .then(() => {
+      alert("Avis envoyé !");
+      document.getElementById('form-container').innerHTML = "<p>Merci pour votre avis 🙏</p>";
+    })
+    .catch(() => alert("Erreur lors de l'envoi."));
 }
