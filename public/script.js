@@ -1,50 +1,64 @@
-let selectedNote = 0;
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const app = express();
 
-const stars = document.querySelectorAll('.star');
-const formContainer = document.getElementById('form-container');
-const confirmation = document.getElementById('confirmation');
+// Configuration
+const PORT = process.env.PORT || 3000;
 
-stars.forEach(star => {
-  star.addEventListener('click', () => {
-    selectedNote = parseInt(star.dataset.note);
+// Middleware
+app.use(express.static('public')); // pour les fichiers CSS, JS, images
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-    // reset all
-    stars.forEach(s => s.classList.remove('selected'));
-    for (let i = 0; i < selectedNote; i++) {
-      stars[i].classList.add('selected');
+// Vue avec EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Route principale
+app.get('/', (req, res) => {
+  res.render('index'); // index.ejs ou index.html selon ton moteur de vue
+});
+
+// Traitement des avis
+app.post('/avis', (req, res) => {
+  const { note, message } = req.body;
+
+  if (!note || !message) {
+    return res.status(400).send("Champs manquants");
+  }
+
+  const avis = {
+    note,
+    message,
+    date: new Date().toISOString()
+  };
+
+  // Enregistre dans un fichier local
+  const avisFilePath = path.join(__dirname, 'avis.json');
+  let data = [];
+
+  try {
+    if (fs.existsSync(avisFilePath)) {
+      const existing = fs.readFileSync(avisFilePath);
+      data = JSON.parse(existing);
     }
+  } catch (e) {
+    console.error("Erreur lecture fichier avis:", e);
+  }
 
-    // cacher les deux containers
-    formContainer.classList.remove('show');
-    confirmation.classList.remove('show');
+  data.push(avis);
 
-    if (selectedNote >= 4) {
-      confirmation.classList.add('show');
-    } else {
-      formContainer.classList.add('show');
+  fs.writeFile(avisFilePath, JSON.stringify(data, null, 2), err => {
+    if (err) {
+      console.error("Erreur écriture fichier avis:", err);
+      return res.status(500).send("Erreur serveur");
     }
+    res.send("Avis enregistré");
   });
 });
 
-function envoyerAvis() {
-  const message = document.getElementById('message').value.trim();
-  if (!selectedNote || !message) {
-    alert("Veuillez sélectionner une note et écrire un message.");
-    return;
-  }
-
-  fetch('/avis', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ note: selectedNote, message })
-  })
-  .then(res => res.text())
-  .then(data => {
-    alert("Merci pour votre retour !");
-    formContainer.classList.remove('show');
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Une erreur est survenue.");
-  });
-}
+// Démarrage du serveur
+app.listen(PORT, () => {
+  console.log(`Serveur démarré sur http://localhost:${PORT}`);
+});
