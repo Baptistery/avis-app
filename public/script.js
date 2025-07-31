@@ -1,64 +1,40 @@
-const express = require('express');
-const path = require('path');
-const fs = require('fs');
-const app = express();
+console.log("JS chargé !");
 
-// Configuration
-const PORT = process.env.PORT || 3000;
+let selectedNote = 0;
 
-// Middleware
-app.use(express.static('public')); // pour les fichiers CSS, JS, images
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+document.querySelectorAll('.star').forEach(btn => {
+  btn.addEventListener('click', () => {
+    selectedNote = parseInt(btn.dataset.note);
 
-// Vue avec EJS
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// Route principale
-app.get('/', (req, res) => {
-  res.render('index'); // index.ejs ou index.html selon ton moteur de vue
-});
-
-// Traitement des avis
-app.post('/avis', (req, res) => {
-  const { note, message } = req.body;
-
-  if (!note || !message) {
-    return res.status(400).send("Champs manquants");
-  }
-
-  const avis = {
-    note,
-    message,
-    date: new Date().toISOString()
-  };
-
-  // Enregistre dans un fichier local
-  const avisFilePath = path.join(__dirname, 'avis.json');
-  let data = [];
-
-  try {
-    if (fs.existsSync(avisFilePath)) {
-      const existing = fs.readFileSync(avisFilePath);
-      data = JSON.parse(existing);
+    if (selectedNote <= 3) {
+      document.getElementById('form-container').style.display = 'block';
+      document.getElementById('confirmation').style.display = 'none';
+    } else {
+      document.getElementById('form-container').style.display = 'none';
+      document.getElementById('confirmation').style.display = 'block';
     }
-  } catch (e) {
-    console.error("Erreur lecture fichier avis:", e);
-  }
 
-  data.push(avis);
-
-  fs.writeFile(avisFilePath, JSON.stringify(data, null, 2), err => {
-    if (err) {
-      console.error("Erreur écriture fichier avis:", err);
-      return res.status(500).send("Erreur serveur");
+    // Effet visuel de sélection
+    document.querySelectorAll('.star').forEach(star => star.classList.remove('selected'));
+    for (let i = 0; i < selectedNote; i++) {
+      document.querySelectorAll('.star')[i].classList.add('selected');
     }
-    res.send("Avis enregistré");
   });
 });
 
-// Démarrage du serveur
-app.listen(PORT, () => {
-  console.log(`Serveur démarré sur http://localhost:${PORT}`);
-});
+function envoyerAvis() {
+  const message = document.getElementById('message').value.trim();
+  if (!message) return alert("Merci de laisser un message.");
+
+  fetch('/avis', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ note: selectedNote, message })
+  })
+    .then(res => res.text())
+    .then(() => {
+      alert("Avis envoyé !");
+      document.getElementById('form-container').innerHTML = "<p>Merci pour votre avis 🙏</p>";
+    })
+    .catch(() => alert("Erreur lors de l'envoi."));
+}

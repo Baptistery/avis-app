@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Laisser un avis</title>
-  <link rel="stylesheet" href="/style.css" />
+  <meta charset="UTF-8">
+  <title>Laissez votre avis</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="overlay"></div>
-
   <div class="container">
-    <img src="/logo.png" alt="Logo" class="logo" />
-    <h2>Comment avez-vous trouvé votre expérience ?</h2>
+    <!-- Logo en haut -->
+    <img src="/logo.png" alt="Logo" class="logo">
 
+    <h1>Que pensez-vous de votre expérience ?</h1>
+
+    <!-- Étoiles -->
     <div class="stars">
-      <button class="star" data-note="1">&#9733;</button>
-      <button class="star" data-note="2">&#9733;</button>
-      <button class="star" data-note="3">&#9733;</button>
-      <button class="star" data-note="4">&#9733;</button>
-      <button class="star" data-note="5">&#9733;</button>
+      <button class="star" data-note="1">⭐</button>
+      <button class="star" data-note="2">⭐</button>
+      <button class="star" data-note="3">⭐</button>
+      <button class="star" data-note="4">⭐</button>
+      <button class="star" data-note="5">⭐</button>
     </div>
 
-    <div id="form-container">
-      <p>Merci de nous dire ce que nous pouvons améliorer :</p>
-      <textarea id="message" placeholder="Votre message"></textarea>
-      <br />
+    <!-- Formulaire pour les mauvaises notes -->
+    <div id="form-container" style="display: none;">
+      <h3>Merci de nous aider à nous améliorer</h3>
+      <textarea id="message" placeholder="Expliquez-nous ce qui n’allait pas..."></textarea>
       <button onclick="envoyerAvis()">Envoyer</button>
     </div>
 
-    <div id="confirmation">
-      <p>Merci pour votre retour ! Pourriez-vous aussi laisser un avis public ?</p>
-      <a href="https://g.page/r/CODE_GOOGLE_REVIEW_PLACE" target="_blank">
-        <button>Laisser un avis sur Google</button>
+    <!-- Message pour bonnes notes -->
+    <div id="confirmation" style="display: none;">
+      <p>Merci pour votre retour positif 🙏</p>
+      <p>Souhaitez-vous laisser un avis Google ?</p>
+      <a id="googleLink" href="https://g.page/r/CODE-GOOGLE-ICI/review" target="_blank">
+        <button>Laisser un avis Google</button>
       </a>
     </div>
   </div>
 
+  <!-- Script JS -->
   <script src="/script.js"></script>
 </body>
 </html>
